@@ -17,14 +17,19 @@ methods - Provide method syntax and autoclean namespaces
     # change invocant name
     method foo ($class: $bar) { $class->bar($bar) }
 
+    # "1;" no longer required here
+
 # DESCRIPTION
 
 This module uses [Method::Signatures::Simple](http://search.cpan.org/perldoc?Method::Signatures::Simple) to provide named and
 anonymous methods with parameters, except with a shorter module name.
 
-It also imports [namespace::autoclean](http://search.cpan.org/perldoc?namespace::autoclean) so the imported `method` helper
-function (as well as any imported helper functions) won't become methods
-in the importing module.
+It also imports [namespace::autoclean](http://search.cpan.org/perldoc?namespace::autoclean) so the `method` helper function
+(as well as any imported helper functions) won't become methods in the
+importing module.
+
+Finally, it also imports [true](http://search.cpan.org/perldoc?true) so there's no need to put `1;` in the
+end of the importing module.
 
 # SEE ALSO
 

@@ -1,3 +1,7 @@
+[Changes for 0.02 - Sun Jun 19 18:00:41 CST 2011]
+
+* Add auto-importing to true.pm as well.
+
 [Changes for 0.01 - Sat Jun 18 16:53:50 PDT 2011]
 
 * Initial release to CPAN.

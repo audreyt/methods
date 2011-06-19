@@ -2,18 +2,18 @@ package methods;
 use 5.008;
 our $VERSION = '0.02';
 
+use true;
 use namespace::autoclean;
 use Method::Signatures::Simple;
 our @ISA = 'Method::Signatures::Simple';
 
 method import {
+    true->import;
     namespace::autoclean->import( -cleanee => scalar(caller) );
 
     unshift @_, 'Method::Signatures::Simple';
     goto &Method::Signatures::Simple::import;
 }
-
-1;
 
 __END__
 
@@ -38,14 +38,19 @@ methods - Provide method syntax and autoclean namespaces
     # change invocant name
     method foo ($class: $bar) { $class->bar($bar) }
 
+    # "1;" no longer required here
+
 =head1 DESCRIPTION
 
 This module uses L<Method::Signatures::Simple> to provide named and
 anonymous methods with parameters, except with a shorter module name.
 
-It also imports L<namespace::autoclean> so the imported C<method> helper
-function (as well as any imported helper functions) won't become methods
-in the importing module.
+It also imports L<namespace::autoclean> so the C<method> helper function
+(as well as any imported helper functions) won't become methods in the
+importing module.
+
+Finally, it also imports L<true> so there's no need to put C<1;> in the
+end of the importing module.
 
 =head1 SEE ALSO
 
