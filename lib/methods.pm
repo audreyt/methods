@@ -1,6 +1,6 @@
 package methods;
 use 5.008;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use namespace::autoclean;
 use Method::Signatures::Simple;
@@ -16,6 +16,8 @@ method import {
 1;
 
 __END__
+
+=encoding utf8
 
 =head1 NAME
 
