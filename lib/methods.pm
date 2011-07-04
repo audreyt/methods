@@ -1,6 +1,6 @@
 package methods;
 use 5.008;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use true;
 use namespace::autoclean;
@@ -8,11 +8,20 @@ use Method::Signatures::Simple;
 our @ISA = 'Method::Signatures::Simple';
 
 method import {
+    my $want_invoker;
+    if (@_ and $_[0] eq '-invoker') {
+        $want_invoker = shift;
+    }
+
     true->import;
     namespace::autoclean->import( -cleanee => scalar(caller) );
+    Method::Signatures::Simple->import( @_, into => scalar(caller) );
 
-    unshift @_, 'Method::Signatures::Simple';
-    goto &Method::Signatures::Simple::import;
+    if ($want_invoker) {
+        require invoker;
+        unshift @_, 'invoker';
+        goto &invoker::import;
+    }
 }
 
 __END__
@@ -40,6 +49,13 @@ methods - Provide method syntax and autoclean namespaces
 
     # "1;" no longer required here
 
+With L<invoker> support:
+
+    use methods-invoker;
+    method foo() {
+       $->bar(); # Write "$self->method" as "$->method"
+    }
+
 =head1 DESCRIPTION
 
 This module uses L<Method::Signatures::Simple> to provide named and
@@ -50,7 +66,16 @@ It also imports L<namespace::autoclean> so the C<method> helper function
 importing module.
 
 Finally, it also imports L<true> so there's no need to put C<1;> in the
-end of the importing module.
+end of the importing module anymore.
+
+=head1 OPTIONS
+
+If the first argument on the C<use> line is C<-invoker>, then it also
+imports L<invoker> automatically so one can write C<< $self->method >> 
+as C<< $->method >>.
+
+Other arguments are passed verbatim into L<Method::Signatures::Simple>'s
+C<import> function.
 
 =head1 SEE ALSO
 

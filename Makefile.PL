@@ -4,4 +4,5 @@ requires $_ for qw(
     true::VERSION
     namespace::autoclean
     Method::Signatures::Simple
+    invoker
 );
