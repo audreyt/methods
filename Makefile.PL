@@ -2,6 +2,6 @@
 use inc::Module::Package 'Au:dry 1';
 requires $_ for qw(
     true::VERSION
-    namespace::autoclean
+    namespace::sweep
     Method::Signatures::Simple
 );

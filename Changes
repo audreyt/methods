@@ -1,3 +1,8 @@
+[Changes for 0.10 - Thu Apr 26 21:36:24 CST 2012]
+
+* Switch to namespace::sweep instead of namespace::autoclean
+  to retain compatibility with "use overload". (@clkao)
+
 [Changes for 0.02 - Sun Jun 19 18:00:41 CST 2011]
 
 * Add auto-importing to true.pm as well.

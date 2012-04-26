@@ -1,6 +1,6 @@
 # NAME
 
-methods - Provide method syntax and autoclean namespaces
+methods - Provide method syntax and sweep namespaces
 
 # SYNOPSIS
 
@@ -19,17 +19,33 @@ methods - Provide method syntax and autoclean namespaces
 
     # "1;" no longer required here
 
+With [invoker](http://search.cpan.org/perldoc?invoker) support:
+
+    use methods-invoker;
+    method foo() {
+       $->bar(); # Write "$self->method" as "$->method"
+    }
+
 # DESCRIPTION
 
 This module uses [Method::Signatures::Simple](http://search.cpan.org/perldoc?Method::Signatures::Simple) to provide named and
 anonymous methods with parameters, except with a shorter module name.
 
-It also imports [namespace::autoclean](http://search.cpan.org/perldoc?namespace::autoclean) so the `method` helper function
+It also imports [namespace::sweep](http://search.cpan.org/perldoc?namespace::sweep) so the `method` helper function
 (as well as any imported helper functions) won't become methods in the
 importing module.
 
 Finally, it also imports [true](http://search.cpan.org/perldoc?true) so there's no need to put `1;` in the
-end of the importing module.
+end of the importing module anymore.
+
+# OPTIONS
+
+If the first argument on the `use` line is `-invoker`, then it also
+imports [invoker](http://search.cpan.org/perldoc?invoker) automatically so one can write `$self->method` 
+as `$->method`.
+
+Other arguments are passed verbatim into [Method::Signatures::Simple](http://search.cpan.org/perldoc?Method::Signatures::Simple)'s
+`import` function.
 
 # SEE ALSO
 

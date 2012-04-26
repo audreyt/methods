@@ -1,18 +1,27 @@
 package methods;
 use 5.008;
-our $VERSION = '0.02';
+our $VERSION = '0.10';
 
 use true;
-use namespace::autoclean;
+use namespace::sweep;
 use Method::Signatures::Simple;
 our @ISA = 'Method::Signatures::Simple';
 
 method import {
-    true->import;
-    namespace::autoclean->import( -cleanee => scalar(caller) );
+    my $want_invoker;
+    if (@_ and $_[0] eq '-invoker') {
+        $want_invoker = shift;
+    }
 
-    unshift @_, 'Method::Signatures::Simple';
-    goto &Method::Signatures::Simple::import;
+    true->import;
+    namespace::sweep->import( -cleanee => scalar(caller) );
+    Method::Signatures::Simple->import( @_, into => scalar(caller) );
+
+    if ($want_invoker) {
+        require invoker;
+        unshift @_, 'invoker';
+        goto &invoker::import;
+    }
 }
 
 __END__
@@ -21,7 +30,7 @@ __END__
 
 =head1 NAME
 
-methods - Provide method syntax and autoclean namespaces
+methods - Provide method syntax and sweep namespaces
 
 =head1 SYNOPSIS
 
@@ -40,17 +49,33 @@ methods - Provide method syntax and autoclean namespaces
 
     # "1;" no longer required here
 
+With L<invoker> support:
+
+    use methods-invoker;
+    method foo() {
+       $->bar(); # Write "$self->method" as "$->method"
+    }
+
 =head1 DESCRIPTION
 
 This module uses L<Method::Signatures::Simple> to provide named and
 anonymous methods with parameters, except with a shorter module name.
 
-It also imports L<namespace::autoclean> so the C<method> helper function
+It also imports L<namespace::sweep> so the C<method> helper function
 (as well as any imported helper functions) won't become methods in the
 importing module.
 
 Finally, it also imports L<true> so there's no need to put C<1;> in the
-end of the importing module.
+end of the importing module anymore.
+
+=head1 OPTIONS
+
+If the first argument on the C<use> line is C<-invoker>, then it also
+imports L<invoker> automatically so one can write C<< $self->method >> 
+as C<< $->method >>.
+
+Other arguments are passed verbatim into L<Method::Signatures::Simple>'s
+C<import> function.
 
 =head1 SEE ALSO
 
