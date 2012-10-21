@@ -1,6 +1,6 @@
 package methods;
 use 5.008;
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use true;
 use namespace::sweep;

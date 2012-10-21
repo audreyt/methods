@@ -1,3 +1,7 @@
+[Changes for 0.11 - Sun Oct 21 22:02:16 CST 2012]
+
+* Rebuild with up-to-date Module::Install 1.06; no functional changes.
+
 [Changes for 0.10 - Thu Apr 26 21:36:24 CST 2012]
 
 * Switch to namespace::sweep instead of namespace::autoclean
