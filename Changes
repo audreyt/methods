@@ -1,3 +1,9 @@
+[Changes for 0.12 - Wed Jan 30 23:20:14 CST 2013]
+
+* Make tests pass on FreeBSD.
+
+  Contributed by: Li-Wen Hsu
+
 [Changes for 0.11 - Sun Oct 21 22:02:16 CST 2012]
 
 * Rebuild with up-to-date Module::Install 1.06; no functional changes.

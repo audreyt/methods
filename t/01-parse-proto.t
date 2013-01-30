@@ -13,10 +13,10 @@ my $inst = $mss->new(invocant => '$self');
 
 my @tests = (
     [''               => [ qr'my \$self = shift;'                                   ]],
-    ['$class: %opts'  => [ qr'my \$class = shift;', qr'my \(\%opts\) = \@_;'        ]],
-    ['@stuff'         => [ qr'my \$self = shift;',  qr'my \(\@stuff\) = \@_;'       ]],
-    ['$foo, $bar'     => [ qr'my \$self = shift;',  qr'my \(\$foo, \$bar\) = \@_;'  ]],
-    ["$/foo, $/bar$/" => [ qr'my \$self = shift;',  qr'my \(foo,bar\) = \@_;'       ]],
+    ['$class: %opts'  => [ qr'my \$class = shift;', qr/my \(\%opts\) = \@_;/        ]],
+    ['@stuff'         => [ qr'my \$self = shift;',  qr/my \(\@stuff\) = \@_;/       ]],
+    ['$foo, $bar'     => [ qr'my \$self = shift;',  qr/my \(\$foo,\s*\$bar\) = \@_;/]],
+    ["$/foo, $/bar$/" => [ qr'my \$self = shift;',  qr/my \(foo,\s?bar\) = \@_;/    ]],
 );
 
 for my $t (@tests) {
